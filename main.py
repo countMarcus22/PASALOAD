@@ -14,7 +14,7 @@ def pasaload(amount):
     try:
         
         balance += amount
-        print("PASALOAD: Successfully loaded {} pesos. New balance: {} pesos.".format(amount, balance))
+        print("PASALOAD: It is Loaded! {} pesos. New Balance: {} pesos.".format(amount, balance))
     finally:
         
         lock.release()
