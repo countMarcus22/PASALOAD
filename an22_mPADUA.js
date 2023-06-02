@@ -26,51 +26,62 @@ April 20, 2023
 
 
 
-function calculateGrade(classParticipation, summativeAssessment, finalExamination) {
-const grade = (classParticipation * 30) + (summativeAssessment * 30) + (finalExamination * 40);
+var studentNames = [];
+var classParticipationGrades = [];
+var summativeGrades = [];
+var finalExamGrades = [];
 
-const letterGrade = getLetterGrade(grade);
-
-return {
-grade,
-letterGrade,
-};
-}
-
-function getLetterGrade(grade) {
-switch (grade) {
-case 90-100:
-return "A";
-case 80-80:
-return "B";
-case 70-79:
-return "C";
-case 60-69:
-return "D";
-default:
-return "F";
-}
-}
-
-function main() {
-const classParticipations = [];
-const summativeAssessments = [];
-const finalExaminations = [];
-
-for (let i = 0; i < 5; i++) {
-       
-    classParticipations.push(Number(prompt("Enter the class participation of student " + (i + 1) + ": ")));
-    summativeAssessments.push(Number(prompt("Enter the summative assessment of student " + (i + 1) + ": ")));
-    finalExaminations.push(Number(prompt("Enter the major exam of student " + (i + 1) + ": ")));
+function calculateAverage(grades) {
+  var sum = 0;
+  for (var i = 0; i < grades.length; i++) {
+    sum += grades[i];
   }
-
-  const grades = [];
-
-  for (let i = 0; i < 5; i++) {
-    grades.push(calculateGrade(classParticipations[i], summativeAssessments[i], finalExaminations[i]));
-  }
-
-  console.table(grades);
+  return sum / grades.length;
 }
 
-main();
+function calculateLetterGrade(grade) {
+  if (grade >= 90) {
+    return 'A';
+  } else if (grade >= 80) {
+    return 'B';
+  } else if (grade >= 70) {
+    return 'C';
+  } else if (grade >= 60) {
+    return 'D';
+  } else {
+    return 'F';
+  }
+}
+
+for (var i = 0; i < 5; i++) {
+  var name = prompt('Enter the name of student ' + (i + 1) + ':');
+  studentNames.push(name);
+
+  var classParticipationGrade = 0;
+  for (var j = 0; j < 5; j++) {
+    classParticipationGrade += parseFloat(prompt('Enter the class participation grade ' + (j + 1) + ' for ' + name + ':'));
+  }
+  classParticipationGrades.push(classParticipationGrade / 5);
+
+  var summativeGrade = 0;
+  for (var k = 0; k < 3; k++) {
+    summativeGrade += parseFloat(prompt('Enter the summative grade ' + (k + 1) + ' for ' + name + ':'));
+  }
+  summativeGrades.push(summativeGrade / 3);
+
+  var finalExamGrade = parseFloat(prompt('Enter the final exam grade for ' + name + ':'));
+  finalExamGrades.push(finalExamGrade);
+}
+
+console.log('--------------------------------------------------------------');
+console.log('| Student Name   | Class Participation | Summative Grade | Grade |');
+console.log('--------------------------------------------------------------');
+
+for (var i = 0; i < 5; i++) {
+  var grade = (classParticipationGrades[i] * 0.3) + (summativeGrades[i] * 0.3) + (finalExamGrades[i] * 0.4);
+  var letterGrade = calculateLetterGrade(grade);
+
+  console.log('| ' + studentNames[i].padEnd(15) + ' | ' + classParticipationGrades[i].toFixed(2).padEnd(19) + ' | ' + summativeGrades[i].toFixed(2).padEnd(15) + ' | ' + grade.toFixed(2).padEnd(5) + ' | ' + letterGrade.padEnd(5) + ' |');
+}
+
+console.log('--------------------------------------------------------------');
